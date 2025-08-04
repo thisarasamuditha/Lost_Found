@@ -2,6 +2,8 @@ package com.thisara.LNF.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -12,6 +14,7 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 public class User {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,9 +28,7 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String contactInfo;
-
-    private LocalDateTime createdAt = LocalDateTime.now();
+    private String contactInfo; // Can be used as contactInfo
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<Item> items;
