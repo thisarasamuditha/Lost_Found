@@ -1,10 +1,12 @@
 package com.thisara.LNF.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -28,8 +30,9 @@ public class User {
     @Column(nullable = false)
     private String password;
 
-    private String contactInfo; // Can be used as contactInfo
+    private String contactInfo;
 
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
-    private List<Item> items;
+    @JsonIgnore
+    private List<Item> items = new ArrayList<>();
 }
