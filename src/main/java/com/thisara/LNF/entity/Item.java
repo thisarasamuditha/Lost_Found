@@ -2,6 +2,8 @@ package com.thisara.LNF.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.hibernate.annotations.CreationTimestamp;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
@@ -23,14 +25,21 @@ public class Item {
 
     private String category;
     private String location;
+
     private LocalDate date;
 
     @Enumerated(EnumType.STRING)
     private ItemType type;
 
+    @Column(name = "image_url")    //I added this line
     private String imageUrl;
 
-    private LocalDateTime createdAt = LocalDateTime.now();
+    @Column(name = "contact_info")
+    private String contactInfo;
+
+    @Column(name = "created_at", updatable = false)
+    @CreationTimestamp
+    private LocalDateTime createdAt;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
