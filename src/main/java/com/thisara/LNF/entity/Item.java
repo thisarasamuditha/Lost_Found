@@ -1,5 +1,6 @@
 package com.thisara.LNF.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 import org.hibernate.annotations.CreationTimestamp;
@@ -14,6 +15,7 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 @Builder
 public class Item {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -31,7 +33,7 @@ public class Item {
     @Enumerated(EnumType.STRING)
     private ItemType type;
 
-    @Column(name = "image_url")    //I added this line
+    @Column(name = "image_url")
     private String imageUrl;
 
     @Column(name = "contact_info")
@@ -43,5 +45,6 @@ public class Item {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "user_id", nullable = false)
+    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "items"})
     private User user;
 }
