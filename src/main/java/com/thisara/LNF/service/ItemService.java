@@ -79,4 +79,36 @@ public class ItemService {
                 .postedBy(item.getUser().getUsername())
                 .build();
     }
+
+    public Item updateItem(Long id, ItemRequest request, String username) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (!item.getUser().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized to update this item");
+        }
+
+        item.setTitle(request.getTitle());
+        item.setDescription(request.getDescription());
+        item.setCategory(request.getCategory());
+        item.setLocation(request.getLocation());
+        item.setDate(request.getDate());
+        item.setType(request.getType());
+        item.setImageUrl(request.getImageUrl());
+        item.setContactInfo(request.getContactInfo());
+
+        return itemRepository.save(item);
+    }
+
+    public void deleteItem(Long id, String username) {
+        Item item = itemRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Item not found"));
+
+        if (!item.getUser().getUsername().equals(username)) {
+            throw new RuntimeException("Unauthorized to delete this item");
+        }
+
+        itemRepository.delete(item);
+    }
+
 }
