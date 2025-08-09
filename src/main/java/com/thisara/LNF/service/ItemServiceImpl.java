@@ -57,6 +57,14 @@ public class ItemServiceImpl implements ItemService {
                 .orElseThrow(() -> new RuntimeException("Item not found")));
     }
 
+    @Override
+    public List<ItemResponse> getItemByUserId(Long userid){
+        return itemRepository.findByUserId(userid)
+                .stream()
+                .map(this::mapToResponse)
+                .collect(Collectors.toList());
+    }
+
     // not working
     @Override
     public List<ItemResponse> getItemsByCategory(String category) {
@@ -104,7 +112,7 @@ public class ItemServiceImpl implements ItemService {
 
         // Mapping UserDTO
         ItemResponse.UserDTO uDto = new ItemResponse.UserDTO();
-        uDto.setId(item.getUser().getId());  // Assuming User is a related entity
+        uDto.setUserid(item.getUser().getId());  // Assuming User is a related entity
         uDto.setUsername(item.getUser().getUsername());
         uDto.setEmail(item.getUser().getEmail());
         uDto.setContactInfo(item.getUser().getContactInfo());  // Corrected to get from the User entity
