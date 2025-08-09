@@ -35,6 +35,10 @@ public class ItemController {
         return ResponseEntity.ok(itemService.getItemById(id));
     }
 
+    @GetMapping("user/{userid}")
+    public ResponseEntity<List<ItemResponse>> getItemByUserId(@PathVariable Long userid){
+        return ResponseEntity.ok(itemService.getItemByUserId(userid));
+    }
 
     //not working
     @GetMapping("/category/{category}")
