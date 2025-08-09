@@ -1,12 +1,10 @@
 package com.thisara.LNF.entity;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
-import org.hibernate.annotations.CreationTimestamp;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 @Entity
 @Table(name = "items")
@@ -25,12 +23,13 @@ public class Item {
     @Column(columnDefinition = "TEXT")
     private String description;
 
-    private String category;
+    @Enumerated(EnumType.STRING)
+    private ItemCategory category;
+
     private String location;
 
     private LocalDate date;
 
-    @Enumerated(EnumType.STRING)
     private ItemType type;
 
     @Column(name = "image_url")
@@ -39,12 +38,10 @@ public class Item {
     @Column(name = "contact_info")
     private String contactInfo;
 
-    @Column(name = "created_at", updatable = false)
-    @CreationTimestamp
-    private LocalDateTime createdAt;
-
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "user_id", nullable = false)
-    @JsonIgnoreProperties({"hibernateLazyInitializer", "handler", "items"})
+    @JoinColumn(name = "user_id")
     private User user;
+
+    @Column(name = "created_at", updatable = false)
+    private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
 }

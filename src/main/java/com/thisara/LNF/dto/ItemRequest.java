@@ -1,19 +1,26 @@
 package com.thisara.LNF.dto;
 
+import com.thisara.LNF.entity.ItemCategory;
 import com.thisara.LNF.entity.ItemType;
 import lombok.Data;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
 public class ItemRequest {
     private String title;
+    private ItemCategory category;
     private String description;
-    private String category;
     private String location;
     private LocalDate date;
-    private ItemType type;         // LOST or FOUND
-    private String imageUrl;       // URL or base64 string
-    private String contactInfo;    // Overwrites user contact if needed
+    private ItemType type;
+    private String imageUrl;
+    private UserDTO user;
+
+    @Data
+    public static class UserDTO {
+        private Long id;
+        private String username;
+        private String email;
+        private String contactInfo;
+    }
 }

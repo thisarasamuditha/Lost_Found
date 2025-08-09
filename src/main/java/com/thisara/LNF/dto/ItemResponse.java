@@ -1,26 +1,28 @@
 package com.thisara.LNF.dto;
 
+import com.thisara.LNF.entity.ItemCategory;
 import com.thisara.LNF.entity.ItemType;
-import lombok.Builder;
 import lombok.Data;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @Data
-@Builder
 public class ItemResponse {
     private Long id;
     private String title;
+    private ItemCategory category;
     private String description;
-    private String category;
     private String location;
     private LocalDate date;
     private ItemType type;
     private String imageUrl;
     private String contactInfo;
-    private LocalDateTime createdAt;
+    private UserDTO user;
 
-    // Optional user summary
-    private String postedBy;
+    @Data
+    public static class UserDTO {
+        private Long id;
+        private String username;
+        private String email;
+        private String contactInfo;
+    }
 }
