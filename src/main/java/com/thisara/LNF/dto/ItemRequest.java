@@ -18,7 +18,7 @@ public class ItemRequest {
 
     @Data
     public static class UserDTO {
-        private Long id;
+        private Long userid;
         private String username;
         private String email;
         private String contactInfo;
