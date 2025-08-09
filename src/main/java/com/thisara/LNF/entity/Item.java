@@ -30,6 +30,7 @@ public class Item {
 
     private LocalDate date;
 
+    @Enumerated(EnumType.STRING)
     private ItemType type;
 
     @Column(name = "image_url")
