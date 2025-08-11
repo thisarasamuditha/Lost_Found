@@ -39,4 +39,10 @@ public class AuthService {
                 .map(user -> "Login successful!")
                 .orElse("Invalid credentials");
     }
+
+    public User getUserByUsername(String username) {
+        // Retrieve user by username
+        return userRepository.findByUsername(username)
+                .orElseThrow(() -> new RuntimeException("User not found"));
+    }
 }
