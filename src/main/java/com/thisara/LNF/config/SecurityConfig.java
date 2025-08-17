@@ -29,32 +29,32 @@ public class SecurityConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
-                // Disable CSRF for stateless APIs (like yours)
+                // Disable CSRF for stateless APIs
                 .csrf(csrf -> csrf.disable())
 
-                // Enable CORS for cross-origin requests
+                // Enable CORS
                 .cors(Customizer.withDefaults())
 
-                // Configure authorization rules for endpoints
+                // Configure endpoint access
                 .authorizeHttpRequests(auth -> auth
-                        // Public access to registration and login endpoints
+                        // Allow root URL (fixes 403 on base domain)
+                        .requestMatchers("/").permitAll()
+
+                        // Auth endpoints
                         .requestMatchers("/api/auth/register", "/api/auth/login").permitAll()
 
-                        // Allow public access to POST /api/items and category endpoints
-                        .requestMatchers("/api/items").permitAll()
-                        .requestMatchers("/api/items/**").permitAll()
-                        .requestMatchers("/api/items/category/**").permitAll() // Allow public access to category endpoint
+                        // Public items endpoints
+                        .requestMatchers("/api/items", "/api/items/**", "/api/items/category/**").permitAll()
 
-                        // Require authentication for all other requests
+                        // All other endpoints need authentication
                         .anyRequest().authenticated()
                 )
 
-                // Disable default login page (you don’t need it here)
+                // Disable default login form
                 .formLogin().disable()
 
-                // Stateless session management for API (important for using tokens or basic auth)
-                .sessionManagement()
-                .sessionCreationPolicy(SessionCreationPolicy.STATELESS); // Ensures no session is created
+                // Stateless session for APIs
+                .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS));
 
         return http.build();
     }
@@ -64,19 +64,15 @@ public class SecurityConfig {
         return new BCryptPasswordEncoder();
     }
 
-    // Injecting AuthenticationManager (only needed if you are using authentication)
     @Bean
     public AuthenticationManager authenticationManager(AuthenticationConfiguration config) throws Exception {
         return config.getAuthenticationManager();
     }
 
-
-    // ✅ Custom CORS configuration - UNCOMMENT THIS SECTION
+    // ✅ CORS configuration
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // ✅ Replace with your actual Vercel frontend URL
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
                 "http://localhost:5173",
@@ -90,5 +86,4 @@ public class SecurityConfig {
         source.registerCorsConfiguration("/**", configuration);
         return source;
     }
-
 }
