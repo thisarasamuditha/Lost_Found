@@ -15,7 +15,6 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api/items")
-@CrossOrigin(origins = "http://localhost:5173")
 public class ItemController {
 
     @Autowired
