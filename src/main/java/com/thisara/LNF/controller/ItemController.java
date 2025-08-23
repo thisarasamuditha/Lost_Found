@@ -7,7 +7,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,9 @@ public class ItemController {
     private final ItemService itemService;
 
     @PostMapping
-    public ResponseEntity<ItemResponse> createItem(@RequestBody ItemRequest request) {
-        return ResponseEntity.ok(itemService.addItem(request));
+    public ResponseEntity<ItemResponse> createItem(@RequestPart ItemRequest request, @RequestPart MultipartFile imageFile) throws IOException {
+        ItemResponse response = itemService.createItem(request, imageFile);
+        return ResponseEntity.ok(response);
     }
 
     @GetMapping
