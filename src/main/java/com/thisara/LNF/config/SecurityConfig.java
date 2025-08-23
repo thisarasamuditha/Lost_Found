@@ -76,7 +76,8 @@ public class SecurityConfig {
         configuration.setAllowedOrigins(List.of(
                 "http://localhost:3000",
                 "http://localhost:5173",
-                "https://lnf-frontend-pva6v11mv-thisarasamudithas-projects.vercel.app"
+                "https://lnf-frontend-pva6v11mv-thisarasamudithas-projects.vercel.app",
+                "https://lnf-frontend.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
