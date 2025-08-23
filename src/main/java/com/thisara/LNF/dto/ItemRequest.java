@@ -13,6 +13,7 @@ public class ItemRequest {
     private String location;
     private LocalDate date;
     private ItemType type;
+    private byte[] image_data;
     private String imageUrl;
     private UserDTO user;
 
