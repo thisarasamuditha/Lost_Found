@@ -45,7 +45,6 @@ public class ItemController {
     //not working
     @GetMapping("/category/{category}")
     public ResponseEntity<List<ItemResponse>> getItemsByCategory(@PathVariable String category) {
-        System.out.println(">>> API called with category: " + category);
         return ResponseEntity.ok(itemService.getItemsByCategory(category));
     }
 
