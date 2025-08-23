@@ -46,8 +46,6 @@ public class SecurityConfig {
                         // Public items endpoints
                         .requestMatchers("/api/items", "/api/items/**", "/api/items/category/**").permitAll()
 
-                        .requestMatchers(HttpMethod.GET, "/api/items/search").permitAll()
-
                         // All other endpoints need authentication
                         .anyRequest().authenticated()
                 )
@@ -71,15 +69,15 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // ✅ CORS configuration
+    // ✅ Uncomment and update this in SecurityConfig.java
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-        configuration.setAllowedOrigins(List.of(
-                "http://localhost:3000",
-                "http://localhost:5173",
-                "https://*.vercel.app",
-                "https://lnf-frontend*.vercel.app"
+
+        // ✅ Use patterns to allow all Vercel deployments
+        configuration.setAllowedOriginPatterns(List.of(
+                "http://localhost:*",
+                "https://*.vercel.app"  // This will match ANY Vercel subdomain
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));
