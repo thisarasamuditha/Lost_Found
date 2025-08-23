@@ -69,15 +69,14 @@ public class SecurityConfig {
         return config.getAuthenticationManager();
     }
 
-    // ✅ Uncomment and update this in SecurityConfig.java
+    // ✅ CORS configuration
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
         CorsConfiguration configuration = new CorsConfiguration();
-
-        // ✅ Use patterns to allow all Vercel deployments
-        configuration.setAllowedOriginPatterns(List.of(
-                "http://localhost:*",
-                "https://*.vercel.app"  // This will match ANY Vercel subdomain
+        configuration.setAllowedOrigins(List.of(
+                "http://localhost:3000",
+                "http://localhost:5173",
+                "https://lnf-frontend-pva6v11mv-thisarasamudithas-projects.vercel.app"
         ));
         configuration.setAllowedMethods(List.of("GET", "POST", "PUT", "DELETE", "OPTIONS"));
         configuration.setAllowedHeaders(List.of("*"));

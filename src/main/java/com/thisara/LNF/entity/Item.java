@@ -46,6 +46,6 @@ public class Item {
     @Column(name = "created_at", updatable = false)
     private java.time.LocalDateTime createdAt = java.time.LocalDateTime.now();
 
-    @Lob  //large object
+    @Lob
     private byte[] image_data;
 }

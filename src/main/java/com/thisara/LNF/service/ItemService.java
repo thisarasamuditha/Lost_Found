@@ -2,6 +2,7 @@ package com.thisara.LNF.service;
 
 import com.thisara.LNF.dto.ItemRequest;
 import com.thisara.LNF.dto.ItemResponse;
+import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;

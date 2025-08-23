@@ -16,7 +16,7 @@ public class ItemResponse {
     private ItemType type;
     private byte[] image_data;
     private String imageUrl;
-//    private String contactInfo;
+    //    private String contactInfo;
     private UserDTO user;
 
     @Data
