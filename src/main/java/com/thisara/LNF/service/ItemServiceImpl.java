@@ -7,10 +7,12 @@ import com.thisara.LNF.entity.ItemCategory;
 import com.thisara.LNF.entity.User;
 import com.thisara.LNF.repository.ItemRepository;
 import com.thisara.LNF.repository.UserRepository;
-import com.thisara.LNF.service.ItemService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -22,7 +24,7 @@ public class ItemServiceImpl implements ItemService {
     private final UserRepository userRepository;
 
     @Override
-    public ItemResponse addItem(ItemRequest request) {
+    public ItemResponse createItem(ItemRequest request, MultipartFile imageFile) throws IOException {
         // 1. Get user by email from request
         User user = userRepository.findByEmail(request.getUser().getEmail())
                 .orElseThrow(() -> new RuntimeException("User not found"));
@@ -36,7 +38,9 @@ public class ItemServiceImpl implements ItemService {
         item.setLocation(request.getLocation());
         item.setDate(request.getDate());
         item.setImageUrl(request.getImageUrl());
-        item.setContactInfo(request.getUser().getContactInfo());
+//        item.setContactInfo(request.getUser().getContactInfo());
+        item.setImage_data(imageFile.getBytes());
+
         item.setUser(user);
 
         // 3. Save and map to response
@@ -108,7 +112,13 @@ public class ItemServiceImpl implements ItemService {
         res.setLocation(item.getLocation());
         res.setDate(item.getDate());
         res.setImageUrl(item.getImageUrl());
-        res.setContactInfo(item.getContactInfo());  // Assuming item has contactInfo, if not, this should come from user
+//        res.setContactInfo(item.getContactInfo());  // Assuming item has contactInfo, if not, this should come from user
+
+        // ⚠ If storing as bytes, encode to Base64 string so frontend can render
+        if (item.getImage_data() != null) {
+            String base64Image = Base64.getEncoder().encodeToString(item.getImage_data());
+            res.setImageUrl("data:image/jpeg;base64," + base64Image);
+        }
 
         // Mapping UserDTO
         ItemResponse.UserDTO uDto = new ItemResponse.UserDTO();
